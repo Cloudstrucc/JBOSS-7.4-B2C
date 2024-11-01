@@ -1,10 +1,10 @@
 <subsystem xmlns="urn:jboss:domain:keycloak:1.1">
     <secure-deployment name="jboss-azure-b2c-app.war">
         <realm>YOUR_AZURE_B2C_TENANT</realm>
-        <auth-server-url>https://YOUR_AZURE_B2C_TENANT.b2clogin.com/YOUR_AZURE_B2C_TENANT.onmicrosoft.com/YOUR_USER_FLOW/v2.0/.well-known/openid-configuration</auth-server-url>
+        <auth-server-url>https://cloudstruccb2c.b2clogin.com/cloudstruccb2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1_test</auth-server-url>
         <ssl-required>EXTERNAL</ssl-required>
-        <resource>YOUR_CLIENT_ID</resource>
-        <credential name="secret">YOUR_CLIENT_SECRET</credential>
+        <resource>66c7a104-680f-4b23-8f18-d6a3f1c01798</resource>
+        <credential name="secret">X118Q~URX8jmXm.kRZSY9-HdmwXoK_LQsBlUfdi~</credential>
     </secure-deployment>
     <security-domains>
         <!-- ... other security domains ... -->

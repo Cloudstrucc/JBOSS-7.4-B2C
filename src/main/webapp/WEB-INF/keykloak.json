@@ -1,10 +1,10 @@
 {
-    "realm": "YOUR_AZURE_B2C_TENANT",
-    "auth-server-url": "https://YOUR_AZURE_B2C_TENANT.b2clogin.com/YOUR_AZURE_B2C_TENANT.onmicrosoft.com/YOUR_USER_FLOW/v2.0/",
+    "realm": "cloudstruccb2c",
+    "auth-server-url": "https://cloudstruccb2c.b2clogin.com/cloudstruccb2c.onmicrosoft.com/b2c_1_test/v2.0/",
     "ssl-required": "external",
-    "resource": "YOUR_CLIENT_ID",
+    "resource": "66c7a104-680f-4b23-8f18-d6a3f1c01798",
     "credentials": {
-        "secret": "YOUR_CLIENT_SECRET"
+        "secret": "X118Q~URX8jmXm.kRZSY9-HdmwXoK_LQsBlUfdi~"
     },
     "confidential-port": 0
 }
