@@ -1,166 +1,145 @@
-## Setting up the JBOSS Project and Integration with B2C (using OIDC)
+# JBoss EAP 7.4 Azure B2C Integration Example
 
-### Install prerequisites
+This project demonstrates how to integrate Azure B2C authentication with a JBoss EAP 7.4 web application using OIDC (OpenID Connect).
 
-* Install Java Development Kit (JDK) 8 or later
-* Install Maven
-* Install JBoss EAP 7.4 ([https://developers.redhat.com/products/eap/download](https://developers.redhat.com/products/eap/download))
+## Prerequisites
 
-### Install all pre-requiresites
+Before you begin, ensure you have:
+
+- Windows 10 or later
+- PowerShell 5.1 or later
+- Administrator access on your machine
+
+## Quick Start
+
+1. Clone the repository:
+
+```powershell
+git clone https://github.com/[your-username]/JBOSS-7.4-B2C.git
+cd JBOSS-7.4-B2C
+```
+
+2. Install prerequisites (this will install Chocolatey, OpenJDK 11, and Maven):
 
 ```powershell
 .\install-prerequisites-chocolatey.ps1
 ```
 
-### Set up the project:
+3. Download JBoss EAP 7.4:
+   - Visit [Red Hat JBoss EAP Download Page](https://developers.redhat.com/products/eap/download)
+   - Login or create a Red Hat account
+   - Download "JBoss EAP 7.4.0" ZIP file
+   - Extract to a location of your choice (e.g., `C:\jboss-eap-7.4`)
 
-* Create a new directory for your project
-* Open VS Code and navigate to the project directory
-* Create the files and folders as shown in the artifact below
+## Configuration
 
-```xml
-pom.xml:
+1. Configure Azure B2C:
 
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+   - Create an Azure B2C tenant if you haven't already
+   - Register a new application
+   - Create a sign-up/sign-in user flow
+   - Note down:
+     - Your tenant name
+     - Client ID
+     - Client secret
+2. Update JBoss configuration:
 
-    <groupId>com.example</groupId>
-    <artifactId>jboss-azure-b2c-app</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+   - Navigate to your JBoss installation's configuration directory
+   - Open `standalone/configuration/standalone.xml`
+   - Add the keycloak subsystem configuration from the provided `standalone.xml`
+   - Replace placeholders:
+     - `YOUR_AZURE_B2C_TENANT`
+     - `YOUR_USER_FLOW`
+     - `YOUR_CLIENT_ID`
+     - `YOUR_CLIENT_SECRET`
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-    </properties>
+## Build and Deploy
 
-    <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <finalName>${project.artifactId}</finalName>
-    </build>
-</project>
-
-src/main/webapp/WEB-INF/web.xml:
-
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-    <login-config>
-        <auth-method>OIDC</auth-method>
-    </login-config>
-
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Protected Area</web-resource-name>
-            <url-pattern>/protected/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>*</role-name>
-        </auth-constraint>
-    </security-constraint>
-</web-app>
-
-src/main/webapp/index.html:
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JBoss Azure B2C OIDC App</title>
-</head>
-<body>
-    <h1>Welcome to JBoss Azure B2C OIDC App</h1>
-    <p>Click the button below to log in:</p>
-    <a href="protected/hello.jsp">
-        <button>Login</button>
-    </a>
-</body>
-</html>
-
-src/main/webapp/protected/hello.jsp:
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Protected Page</title>
-</head>
-<body>
-    <h1>Hello, ${pageContext.request.userPrincipal.name}!</h1>
-    <p>This is a protected page.</p>
-    <form action="${pageContext.request.contextPath}/logout" method="post">
-        <input type="submit" value="Logout">
-    </form>
-</body>
-</html>
-
-standalone.xml (Add this to your JBoss EAP configuration):
-
-<subsystem xmlns="urn:jboss:domain:keycloak:1.1">
-    <secure-deployment name="jboss-azure-b2c-app.war">
-        <realm>YOUR_AZURE_B2C_TENANT</realm>
-        <auth-server-url>https://YOUR_AZURE_B2C_TENANT.b2clogin.com/YOUR_AZURE_B2C_TENANT.onmicrosoft.com/YOUR_USER_FLOW/v2.0/.well-known/openid-configuration</auth-server-url>
-        <ssl-required>EXTERNAL</ssl-required>
-        <resource>YOUR_CLIENT_ID</resource>
-        <credential name="secret">YOUR_CLIENT_SECRET</credential>
-    </secure-deployment>
-</subsystem>
-```
-
-### Configure Azure B2C:
-
-* Create an Azure B2C tenant if you haven't already
-* Register a new application in your Azure B2C tenant
-* Create a user flow for sign-up and sign-in
-* Note down your tenant name, client ID, and client secret
-
-### Update the `standalone.xml` configuration:
-
-* Locate the `standalone.xml` file in your JBoss EAP installation (usually in the `standalone/configuration` folder)
-* Add the `<subsystem>` configuration from the artifact, replacing the placeholders with your Azure B2C information
-
-### Build the application:
-
-* Open a PowerShell window in your project directory
-* Run the following command to build the application:
+1. Build the application:
 
 ```powershell
 mvn clean package
 ```
 
-### Deploy the application:
+2. Deploy to JBoss:
 
-* Copy the generated WAR file from the `target` folder to the `standalone/deployments` folder in your JBoss EAP installation
+```powershell
+# Replace [jboss-path] with your JBoss installation path
+Copy-Item "target\jboss-azure-b2c-app.war" "[jboss-path]\standalone\deployments\"
+```
 
-### Start JBoss EAP:
+3. Start JBoss:
 
-* Open a PowerShell window and navigate to the `bin` folder of your JBoss EAP installation
-* Run the following command to start JBoss EAP:
-  ```powershell
-  .\standalone.bat
-  ```
+```powershell
+cd "[jboss-path]\bin"
+.\standalone.bat
+```
 
-### Access the application
+4. Access the application:
+   - Open a browser
+   - Navigate to: `http://localhost:8080/jboss-azure-b2c-app`
+   - Click "Login" to test the Azure B2C integration
 
-* Open a web browser and go to `http://localhost:8080/jboss-azure-b2c-app`
-* Click the "Login" button to initiate the Azure B2C OIDC authentication flow
+## Project Structure
 
-### To stop JBoss EAP
+```
+JBOSS-7.4-B2C/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── example/
+│       │           └── auth/
+│       │               └── LogoutServlet.java
+│       └── webapp/
+│           ├── WEB-INF/
+│           │   └── web.xml
+│           ├── protected/
+│           │   └── hello.jsp
+│           └── index.html
+├── install-prerequisites-chocolatey.ps1
+├── pom.xml
+└── README.md
+```
 
-* Press Ctrl+C in the PowerShell window where JBoss EAP is running
+## Troubleshooting
+
+1. Maven not found:
+
+   - Close and reopen PowerShell after installation
+   - Run `refreshenv` in PowerShell
+2. JBoss deployment errors:
+
+   - Check `[jboss-path]\standalone\log\server.log`
+   - Verify Azure B2C configuration in `standalone.xml`
+   - Ensure all placeholders are replaced with actual values
+3. Authentication errors:
+
+   - Verify Azure B2C application settings
+   - Check user flow configuration
+   - Ensure client ID and secret are correct
+
+## Development
+
+- The project uses Java 11
+- Built with Maven
+- Uses standard Java EE 8 web components
+- Integrates with Azure B2C using OIDC protocol
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- JBoss EAP team for the application server
+- Microsoft Azure B2C team for the identity platform
+- Contributors and maintainers
