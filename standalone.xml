@@ -1,0 +1,20 @@
+<subsystem xmlns="urn:jboss:domain:keycloak:1.1">
+    <secure-deployment name="jboss-azure-b2c-app.war">
+        <realm>YOUR_AZURE_B2C_TENANT</realm>
+        <auth-server-url>https://YOUR_AZURE_B2C_TENANT.b2clogin.com/YOUR_AZURE_B2C_TENANT.onmicrosoft.com/YOUR_USER_FLOW/v2.0/.well-known/openid-configuration</auth-server-url>
+        <ssl-required>EXTERNAL</ssl-required>
+        <resource>YOUR_CLIENT_ID</resource>
+        <credential name="secret">YOUR_CLIENT_SECRET</credential>
+    </secure-deployment>
+    <security-domains>
+        <!-- ... other security domains ... -->
+        <security-domain name="azure-b2c" cache-type="default">
+            <authentication>
+                <login-module code="UsersRoles" flag="required">
+                    <module-option name="usersProperties" value="${jboss.server.config.dir}/users.properties"/>
+                    <module-option name="rolesProperties" value="${jboss.server.config.dir}/roles.properties"/>
+                </login-module>
+            </authentication>
+        </security-domain>
+    </security-domains>
+</subsystem>

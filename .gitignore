@@ -1,0 +1,90 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# JBoss/WildFly
+**/standalone/data/
+**/standalone/deployments/
+**/standalone/log/
+**/standalone/tmp/
+**/standalone/configuration/standalone_xml_history/
+
+# Java
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# IDE - Eclipse
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.project
+.classpath
+.factorypath
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# OS specific
+## Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+## Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Application specific
+*.log
+logs/
+*.pid
+*.properties
+!src/main/resources/*.properties
+!src/test/resources/*.properties
+
+# Security/Secrets
+**/keycloak.json
+**/application.properties
+**/application.yml
+**/application-*.properties
+**/application-*.yml

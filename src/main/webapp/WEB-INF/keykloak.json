@@ -1,0 +1,10 @@
+{
+    "realm": "YOUR_AZURE_B2C_TENANT",
+    "auth-server-url": "https://YOUR_AZURE_B2C_TENANT.b2clogin.com/YOUR_AZURE_B2C_TENANT.onmicrosoft.com/YOUR_USER_FLOW/v2.0/",
+    "ssl-required": "external",
+    "resource": "YOUR_CLIENT_ID",
+    "credentials": {
+        "secret": "YOUR_CLIENT_SECRET"
+    },
+    "confidential-port": 0
+}
