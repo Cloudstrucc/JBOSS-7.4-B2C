@@ -126,6 +126,25 @@ JBOSS-7.4-B2C/
 - Uses standard Java EE 8 web components
 - Integrates with Azure B2C using OIDC protocol
 
+## Configuration Setup
+
+1. Copy the template files to create your configuration:
+```bash
+cp standalone.xml.template standalone.xml
+cp src/main/webapp/WEB-INF/keycloak.json.template src/main/webapp/WEB-INF/keycloak.json
+```
+
+2. Update the configuration files with your values:
+   - In `standalone.xml`:
+     - Replace `${CLIENT_ID}` with your Azure B2C Client ID
+     - Replace `${CLIENT_SECRET}` with your Azure B2C Client Secret
+     - Replace `${TENANT_NAME}` with your Azure B2C Tenant name
+   
+   - In `keycloak.json`:
+     - Replace placeholder values with your Azure B2C configuration
+
+Note: The configuration files contain sensitive information and are excluded from version control.
+
 ## Contributing
 
 1. Fork the repository

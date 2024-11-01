@@ -17,18 +17,14 @@ buildNumber.properties
 **/standalone/tmp/
 **/standalone/configuration/standalone_xml_history/
 
-# Java
-*.class
-*.log
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-hs_err_pid*
-replay_pid*
+# Configuration files with sensitive data
+**/standalone.xml
+**/keycloak.json
+**/application*.properties
+**/application*.yml
+**/*.properties
+!src/main/resources/*.properties
+!src/test/resources/*.properties
 
 # IDE - VSCode
 .vscode/*
@@ -61,6 +57,19 @@ local.properties
 *.ipr
 out/
 
+# Java
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
 # OS specific
 ## Windows
 Thumbs.db
@@ -74,17 +83,9 @@ $RECYCLE.BIN/
 .LSOverride
 ._*
 
-# Application specific
-*.log
-logs/
-*.pid
-*.properties
-!src/main/resources/*.properties
-!src/test/resources/*.properties
-
 # Security/Secrets
-**/keycloak.json
-**/application.properties
-**/application.yml
-**/application-*.properties
-**/application-*.yml
+**/secrets.properties
+**/secrets.yml
+**/secrets.json
+**/application-secrets.properties
+**/application-secrets.yml
