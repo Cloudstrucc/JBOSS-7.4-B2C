@@ -122,6 +122,13 @@ cd "[jboss-path]\bin"
 - Navigate to: `http://localhost:8080/jboss-azure-b2c-app`
 - Click "Login" to test the Azure B2C integration
 
+
+
+![1730710446158](image/README/1730710446158.png)![1730710423921](image/README/1730710423921.png)
+
+![1730710485894](image/README/1730710485894.png)
+
+
 ## Project Structure
 
 ```
